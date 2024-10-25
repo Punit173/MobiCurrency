@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaWallet, FaPlusCircle, FaHistory, FaEye, FaLock, FaTimes } from 'react-icons/fa';
+import { FaWallet, FaPlusCircle, FaHistory, FaEye, FaLock, FaTimes, FaDollarSign, FaEuroSign, FaPoundSign, FaYenSign, FaRupeeSign, FaCanadianMapleLeaf, FaAsterisk } from 'react-icons/fa';
 
 const Wallet = () => {
     const [walletData, setWalletData] = useState([
@@ -10,6 +10,10 @@ const Wallet = () => {
         { id: 3, currency: 'GBP', amount: 2000, date: '2024-10-15', exchangeRate: 102.0 },
         { id: 4, currency: 'JPY', amount: 150000, date: '2024-10-10', exchangeRate: 0.6 },
         { id: 5, currency: 'INR', amount: 100000, date: '2024-10-05', exchangeRate: 1 },
+        { id: 6, currency: 'CAD', amount: 4000, date: '2024-10-25', exchangeRate: 60.0 }, // Canadian Dollar
+        { id: 7, currency: 'AUD', amount: 3500, date: '2024-10-20', exchangeRate: 55.0 }, // Australian Dollar
+        { id: 8, currency: 'CHF', amount: 2500, date: '2024-10-15', exchangeRate: 95.0 }, // Swiss Franc
+        { id: 9, currency: 'CNY', amount: 20000, date: '2024-10-10', exchangeRate: 12.0 }, // Chinese Yuan
     ]);
 
     const [code, setCode] = useState('');
@@ -107,24 +111,58 @@ const Wallet = () => {
                 </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {walletData.map(item => (
-                    <div key={item.id} className="bg-gray-700 p-4 rounded-lg shadow-lg transition transform hover:scale-105">
-                        <h2 className="text-xl font-semibold text-yellow-400 flex items-center">
-                            {item.currency} 
-                            <span className="ml-2 cursor-pointer" onClick={() => openModal(item.id)}>
-                                <FaEye />
-                            </span>
-                        </h2>
-                        <p className="text-gray-300">
-                            Amount: {showAmount[item.id] ? item.amount : '*****'}
-                        </p>
-                        <p className="text-gray-300">{item.date}</p>
-                    </div>
-                ))}
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {walletData.map(item => {
+                    let currencyIcon;
+                    switch (item.currency) {
+                        case 'USD':
+                            currencyIcon = <FaDollarSign className="text-yellow-400" />;
+                            break;
+                        case 'EUR':
+                            currencyIcon = <FaEuroSign className="text-yellow-400" />;
+                            break;
+                        case 'GBP':
+                            currencyIcon = <FaPoundSign className="text-yellow-400" />;
+                            break;
+                        case 'JPY':
+                            currencyIcon = <FaYenSign className="text-yellow-400" />;
+                            break;
+                        case 'INR':
+                            currencyIcon = <FaRupeeSign className="text-yellow-400" />;
+                            break;
+                        case 'CAD':
+                            currencyIcon = <FaCanadianMapleLeaf className="text-yellow-400" />; // Canadian Dollar
+                            break;
+                        case 'AUD':
+                            currencyIcon = <FaAsterisk className="text-yellow-400" />; // Australian Dollar
+                            break;
+                        case 'CHF':
+                            currencyIcon = <FaAsterisk className="text-yellow-400" />; // Swiss Franc
+                            break;
+                        case 'CNY':
+                            currencyIcon = <FaAsterisk className="text-yellow-400" />; // Chinese Yuan
+                            break;
+                        default:
+                            currencyIcon = null;
+                    }
 
-            
+                    return (
+                        <div key={item.id} className="bg-gray-700 p-4 rounded-lg shadow-lg transition transform hover:scale-105">
+                            <h2 className="text-xl font-semibold text-yellow-400 flex items-center">
+                                {currencyIcon}
+                                <span className="ml-2">{item.currency}</span>
+                                <span className="ml-2 cursor-pointer" onClick={() => openModal(item.id)}>
+                                    <FaEye />
+                                </span>
+                            </h2>
+                            <p className="text-gray-300">
+                                Amount: {showAmount[item.id] ? item.amount : '*****'}
+                            </p>
+                            <p className="text-gray-300">{item.date}</p>
+                        </div>
+                    );
+                })}
+            </div>
 
             <div className="mt-6 bg-gray-700 p-4 rounded-lg shadow-lg">
                 <h2 className="text-xl font-semibold text-yellow-400">
@@ -152,32 +190,28 @@ const Wallet = () => {
                             Enter Password
                         </h3>
                         <input
-                            type="text"
-                            placeholder="Enter code"
+                            type="password"
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
-                            className="border border-gray-500 p-2 rounded-md w-full"
+                            className="w-full p-2 mb-4 bg-gray-600 text-gray-300 rounded"
                         />
-                        <div className="mt-4 flex justify-end">
+                        <div className="flex justify-end">
                             <button
                                 onClick={handleCheckBalance}
                                 className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
                             >
-                                Submit
+                                Check Balance
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(false)}
-                                className="ml-2 px-4 py-2 bg-red-500 text-gray-900 font-semibold rounded-md hover:bg-red-600 transition"
+                                className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md ml-2 hover:bg-red-600 transition"
                             >
-                                <FaTimes className="inline-block mr-2" />
-                                Cancel
+                                <FaTimes />
                             </button>
                         </div>
                     </div>
                 </div>
             )}
-
-            <ToastContainer />
         </div>
     );
 };
