@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Wallet from './components/Wallet';
 import { Route, Routes } from 'react-router-dom';
+import Payment from './components/Payment';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/exchange" element={<Exchange />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/wallet" element={<Wallet />} />
       </Routes>
     </>
