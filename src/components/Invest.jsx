@@ -3,6 +3,8 @@ import { getDatabase, ref, set, get } from 'firebase/database';
 import firebaseApp from '../firebase/firebase';
 import { getAuth } from 'firebase/auth';
 import { FaDollarSign, FaEuroSign, FaPoundSign, FaYenSign, FaRupeeSign } from 'react-icons/fa';
+import InvestmentProfit from './InvestmentProfit';
+import InvestmentProfitGraph from './InvestmentProfitGraph';
 
 const Invest = () => {
     const [amount, setAmount] = useState('');
@@ -137,6 +139,9 @@ const Invest = () => {
                 </button>
             </form>
             {message && <p className="mt-4 text-yellow-400 text-center">{message}</p>}
+
+            <InvestmentProfit user="akshat" />
+            <InvestmentProfitGraph />
         </div>
     );
 };
