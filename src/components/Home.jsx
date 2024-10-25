@@ -8,21 +8,27 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const Home = () => {
     const [historicalData, setHistoricalData] = useState([]);
     const [forecastData, setForecastData] = useState([]);
+    const [selectedCurrencyPair, setSelectedCurrencyPair] = useState("INR-USD");
+    const [loading, setLoading] = useState(true);
+
+    // Currency options
+    const currencyPairs = ["INR-USD", "EUR-USD", "GBP-USD", "AUD-USD", "JPY-USD"];
 
     useEffect(() => {
-        // Fetch data from Flask backend
         const fetchForecastData = async () => {
+            setLoading(true); // Start loading before fetching data
             try {
-                const response = await axios.get('http://127.0.0.1:5000/forecast');
+                const response = await axios.get(`http://127.0.0.1:5000/forecast?pair=${selectedCurrencyPair}`);
                 setHistoricalData(response.data.historical);
                 setForecastData(response.data.forecast);
             } catch (error) {
                 console.error("Error fetching forecast data:", error);
             }
+            setLoading(false); // End loading after fetching data
         };
 
         fetchForecastData();
-    }, []);
+    }, [selectedCurrencyPair]);
 
     // Prepare data for the chart
     const dates = [
@@ -39,15 +45,15 @@ const Home = () => {
             {
                 label: 'Actual Rate (Last 30 Days)',
                 data: actualRates,
-                borderColor: 'blue',
-                backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                borderColor: '#1D4ED8',
+                backgroundColor: 'rgba(29, 78, 216, 0.1)',
                 fill: true,
             },
             {
                 label: 'Forecasted Rate (Next 30 Days)',
                 data: Array(historicalData.length).fill(null).concat(forecastedRates),
-                borderColor: 'orange',
-                backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                borderColor: '#F59E0B',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
                 fill: true,
             }
         ]
@@ -56,31 +62,65 @@ const Home = () => {
     const options = {
         responsive: true,
         plugins: {
-            legend: { position: 'top' },
-            title: { display: true, text: 'INR to USD Exchange Rate Forecast' }
+            legend: { position: 'top', labels: { color: '#D1D5DB' } },
+            title: { display: true, text: `${selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast`, color: '#F3F4F6', font: { size: 18 } }
         },
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'Date'
+                    text: 'Date',
+                    color: '#F3F4F6'
+                },
+                ticks: {
+                    color: '#9CA3AF'
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Exchange Rate'
+                    text: 'Exchange Rate',
+                    color: '#F3F4F6'
+                },
+                ticks: {
+                    color: '#9CA3AF'
                 }
             }
         }
     };
 
     return (
-        <div>
-            <h2>INR to USD Exchange Rate Forecast</h2>
-            <Line data={data} options={options} />
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+            <div className="w-full max-w-4xl bg-gray-800 shadow-lg rounded-lg p-6">
+                <div className="flex justify-center mb-6">
+                    <select
+                        className="bg-gray-700 text-yellow-400 p-2 rounded-lg outline-none"
+                        value={selectedCurrencyPair}
+                        onChange={(e) => setSelectedCurrencyPair(e.target.value)}
+                    >
+                        {currencyPairs.map((pair) => (
+                            <option key={pair} value={pair}>
+                                {pair.replace("-", " to ")}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <h2 className="text-2xl font-bold text-yellow-400 text-center mb-6">
+                    {selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast
+                </h2>
+                <div className="bg-gray-700 p-4 rounded-lg shadow-md">
+                    {loading ? (
+                        <div className="text-yellow-400 text-center">Loading data...</div>
+                    ) : (
+                        <Line data={data} options={options} />
+                    )}
+                </div>
+            </div>
         </div>
     );
 };
 
 export default Home;
+
+
+

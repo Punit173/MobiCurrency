@@ -1,5 +1,4 @@
-# app.py
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request  # Added request to handle query parameters
 from flask_cors import CORS  # Import CORS
 from prophet import Prophet
 import yfinance as yf
@@ -13,14 +12,20 @@ CORS(app)
 
 @app.route('/forecast', methods=['GET'])
 def get_forecast():
-    # Set the currency pair and date range for the last 30 days
-    currency_pair = "INR=X"
+    # Get the currency pair from query parameters, default to "INR=X" if not specified
+    currency_pair = request.args.get('pair', 'INR=X')
+    
+    # Set the date range for the last 30 days
     end_date = datetime.datetime.now()
     start_date = end_date - datetime.timedelta(days=30)
 
-    # Fetch the last 30 days of data
+    # Fetch the last 30 days of data for the specified currency pair
     data = yf.download(currency_pair, start=start_date.strftime("%Y-%m-%d"), end=end_date.strftime("%Y-%m-%d"))
     
+    # Check if data is retrieved successfully
+    if data.empty:
+        return jsonify({"error": "Data not available for the selected currency pair"}), 404
+
     # Prepare the data for Prophet
     df = data.reset_index()[['Date', 'Close']]
     df['Date'] = df['Date'].dt.tz_localize(None)
