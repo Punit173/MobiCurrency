@@ -5,6 +5,7 @@ import './App.css'
 import Exchange from "./components/Exchange";
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import Wallet from './components/Wallet';
 import { Route, Routes } from 'react-router-dom';
 
 
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/exchange" element={<Exchange />} />
+        <Route path="/wallet" element={<Wallet />} />
       </Routes>
     </>
   )
