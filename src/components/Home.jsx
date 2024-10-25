@@ -9,16 +9,16 @@ const Home = () => {
     return (
         <div className="bg-gray-900 min-h-screen text-gray-100 font-sans">
 
-{/* Background video */}
-<video
-    className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0
-    autoPlay
-    muted
-    loop
->
-    <source src="/homevideo.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-</video>
+        {/* Background video */}
+        <video
+            className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0
+            autoPlay
+            muted
+            loop
+        >
+            <source src="/homevideo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
 
 
             {/* Hero Section */}

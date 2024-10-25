@@ -18,7 +18,7 @@ const Contact = () => {
                 variants={containerVariants}
                 transition={{ duration: 0.5 }}
             >
-                Contact Me
+                Contact Us
             </motion.h1>
             <motion.form
                 className="flex flex-col space-y-4 mb-6 max-w-md w-full"
@@ -66,15 +66,6 @@ const Contact = () => {
                     <span>Location</span>
                 </div>
             </div>
-            <motion.img
-                src="https://via.placeholder.com/400" // Replace with your image URL
-                alt="Contact Us"
-                className="rounded-lg shadow-lg"
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-                transition={{ duration: 0.5, delay: 0.4 }}
-            />
         </div>
     );
 };
