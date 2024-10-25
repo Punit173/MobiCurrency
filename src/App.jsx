@@ -10,6 +10,9 @@ import { Route, Routes } from 'react-router-dom';
 import Payment from './components/Payment';
 import {Near} from './components/Near';
 import Invest from './components/Invest';
+import Rates from './components/Rates';
+import Contact from './components/Contact';
+import  About from './components/About';
 
 
 function App() {
@@ -25,6 +28,9 @@ function App() {
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/near" element={<Near />} />
         <Route path="/invest" element={<Invest />} />
+        <Route path="/rates" element={<Rates />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </>
   )
