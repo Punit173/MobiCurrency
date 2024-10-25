@@ -28,11 +28,11 @@ const Navbar = () => {
             <FaWallet />
             <span>Wallet</span>
           </a>
-          <a href="#about" className="flex items-center space-x-1 hover:text-yellow-300">
+          <a href="/about" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaInfoCircle />
             <span>About</span>
           </a>
-          <a href="#contact" className="flex items-center space-x-1 hover:text-yellow-300">
+          <a href="/contact" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaPhoneAlt />
             <span>Contact</span>
           </a>
