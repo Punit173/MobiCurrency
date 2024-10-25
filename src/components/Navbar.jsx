@@ -20,7 +20,7 @@ const Navbar = () => {
             <FaExchangeAlt />
             <span>Exchange</span>
           </a>
-          <a href="#rates" className="flex items-center space-x-1 hover:text-yellow-300">
+          <a href="/rates" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaDollarSign />
             <span>Rates</span>
           </a>
