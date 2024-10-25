@@ -129,6 +129,16 @@ const Wallet = () => {
                     </div>
                 </div>
             )}
+
+
+            <div class="flex items-center justify-center h-screen">
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+                    <button class="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={()=>{location.href = '/invest'}}>
+                        INVEST
+                    </button>
+                </div>
+            </div>
+
         </div>
     );
 };
