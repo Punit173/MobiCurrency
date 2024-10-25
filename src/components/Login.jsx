@@ -7,6 +7,7 @@ import {
 import { setDoc, doc } from "firebase/firestore";
 import { openDB } from "idb";
 import { Link, useNavigate } from "react-router-dom";
+import { FaDollarSign, FaExchangeAlt, FaRegHandPointRight } from "react-icons/fa";
 
 // Initialize IndexedDB
 const dbPromise = openDB("ZeroKnowledgeAuthDB", 1, {
@@ -287,52 +288,84 @@ const Login = () => {
         }
     };
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black text-yellow-500 p-4">
-        <form
-            className="bg-gray-800 rounded-lg p-6 shadow-lg w-full max-w-md"
-            onSubmit={isLogin ? handleLogin : handleSignup}
-        >
-            <h2 className="text-2xl font-bold mb-4">
-                {isLogin ? "Login" : "Sign Up"}
-            </h2>
-            {error && <p className="text-red-500 mb-4">{error}</p>}
-            <input
-                type="email"
-                placeholder="Email"
-                className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-            <button
-                type="submit"
-                className="bg-yellow-500 text-black p-2 rounded hover:bg-yellow-600 w-full"
-                disabled={loading}
+        <>
+            <div
+                className="min-h-screen flex bg-black text-yellow-500 p-4"
+                style={{
+                    backgroundImage: 'url("https://plus.unsplash.com/premium_photo-1681469490209-c2f9f8f5c0a2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW9uZXklMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
             >
-                {loading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
-            </button>
-            <p className="mt-4">
-                {isLogin
-                    ? "Don't have an account? "
-                    : "Already have an account? "}
-                <button
-                    type="button"
-                    className="text-yellow-300"
-                    onClick={() => setIsLogin(!isLogin)}
-                >
-                    {isLogin ? "Sign Up" : "Login"}
-                </button>
-            </p>
-        </form>
-    </div>
+                {/* <div className="flex-1 flex items-center justify-center p-8">
+                    <div className="lg:flex flex-col justify-center max-w-lg bg-gray-800 p-6 rounded-md shadow-lg">
+                        <h1 className="text-4xl font-bold text-white mb-4">
+                            Welcome to MobiCurrency
+                        </h1>
+                        <p className="text-gray-300 mb-4">
+                            <FaDollarSign className="inline-block mr-2 text-yellow-400" />
+                            Manage your currency exchanges effortlessly.
+                        </p>
+                        <p className="text-gray-300 mb-4">
+                            <FaExchangeAlt className="inline-block mr-2 text-yellow-400" />
+                            Join us and experience seamless transactions.
+                        </p>
+                        <p className="text-gray-300">
+                            <FaRegHandPointRight className="inline-block mr-2 text-yellow-400" />
+                            Start your journey with us today!
+                        </p>
+                    
+                    </div>
+                </div> */}
+
+                <div className="flex items-center justify-center flex-1">
+                    <form
+                        className="bg-gray-800 rounded-lg p-6 shadow-lg w-full max-w-md"
+                        onSubmit={isLogin ? handleLogin : handleSignup}
+                    >
+                        <h2 className="text-2xl font-bold mb-4">
+                            {isLogin ? "Login" : "Sign Up"}
+                        </h2>
+                        {error && <p className="text-red-500 mb-4">{error}</p>}
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button
+                            type="submit"
+                            className="bg-yellow-500 text-black p-2 rounded hover:bg-yellow-600 w-full"
+                            disabled={loading}
+                        >
+                            {loading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
+                        </button>
+                        <p className="mt-4">
+                            {isLogin
+                                ? "Don't have an account? "
+                                : "Already have an account? "}
+                            <button
+                                type="button"
+                                className="text-yellow-300"
+                                onClick={() => setIsLogin(!isLogin)}
+                            >
+                                {isLogin ? "Sign Up" : "Login"}
+                            </button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </>
     );
 };
 
