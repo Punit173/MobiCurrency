@@ -8,21 +8,17 @@ const Home = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen text-gray-100 font-sans">
-
-        {/* Background video */}
-        <video
-            className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0
-            autoPlay
-            muted
-            loop
-        >
-            <source src="/homevideo.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
-
-
-            {/* Hero Section */}
+            <div className='hidden md:flex md:bg-yellow-500 md:h-1'></div>
             <section className="flex flex-col items-center justify-center h-screen bg-cover bg-center relative text-center overflow-hidden" >
+                <video
+                    className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0
+                    autoPlay
+                    muted
+                    loop
+                >
+                    <source src="/homevideo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="relative z-10">
                     <h1 className="text-4xl sm:text-5xl font-bold text-yellow-400 mb-4 animate-fadeInUp">
