@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import firebaseApp from "../firebase/firebase";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -15,8 +15,7 @@ const Exchange = () => {
     const [selectedCurrencyPair, setSelectedCurrencyPair] = useState("INR-USD");
     const [loading, setLoading] = useState(true);
 
-    const navigate = useNavigate(); // Initialize useNavigate
-
+    const navigate = useNavigate();
     const currencyPairs = ["INR-USD", "EUR-USD", "GBP-USD", "AUD-USD", "JPY-USD"];
     const currencyPairMapping = {
         "INR-USD": "USDINR=X",
@@ -31,7 +30,6 @@ const Exchange = () => {
             setLoading(true);
             try {
                 const response = await axios.get(`http://127.0.0.1:5000/forecast?pair=${currencyPairMapping[selectedCurrencyPair]}`);
-                console.log("Forecast Data:", response.data);
                 setHistoricalData(response.data.historical);
                 setForecastData(response.data.forecast);
             } catch (error) {
@@ -69,28 +67,32 @@ const Exchange = () => {
     const currentPrice = historicalData.length ? historicalData[historicalData.length - 1].y : 0;
 
     const data = {
-        labels: historicalData.map((point) => point.ds),
+        labels: [
+            ...historicalData.map((point) => point.ds),
+            ...forecastData.map((point) => point.ds) // Combine historical and forecast dates
+        ],
         datasets: [
             {
-                label: 'Actual Rate (Last 30 Days)',
+                label: 'Historical Rate (Last 30 Days)',
                 data: historicalData.map((point) => point.y),
-                borderColor: '#1D4ED8',
-                backgroundColor: 'rgba(29, 78, 216, 0.1)',
+                borderColor: '#1E90FF',
+                backgroundColor: 'rgba(30, 144, 255, 0.1)',
                 fill: true,
             },
             {
-                label: 'Forecasted Rate (Next 30 Days)',
+                label: 'Predicted Rate (Next 30 Days)',
                 data: [
-                    ...Array(historicalData.length).fill(null),
-                    ...forecastData.map((point) => point.yhat)
+                    ...Array(historicalData.length).fill(null), // Align with historical data
+                    ...forecastData.map((point) => point.yhat) // Add forecasted data points
                 ],
-                borderColor: '#FBBF24',
-                backgroundColor: 'rgba(245, 191, 36, 0.1)',
+                borderColor: '#FF8C00',
+                backgroundColor: 'rgba(255, 140, 0, 0.1)',
                 fill: true,
+                borderDash: [5, 5],
             }
         ]
     };
-
+    
     const options = {
         responsive: true,
         plugins: {
@@ -103,7 +105,7 @@ const Exchange = () => {
             title: {
                 display: true,
                 text: `${selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast`,
-                color: 'yellow'
+                color: '#FBBF24'
             }
         },
         scales: {
@@ -121,11 +123,11 @@ const Exchange = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
-            <div className="w-full max-w-4xl bg-gray-800 shadow-lg rounded-lg p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+            <div className="w-full max-w-4xl bg-gray-900 shadow-lg rounded-lg p-6">
                 <div className="flex justify-center mb-6">
                     <select
-                        className="bg-gray-700 text-yellow-400 p-2 rounded-lg outline-none"
+                        className="bg-gray-800 text-yellow-400 p-3 rounded-lg outline-none shadow-md"
                         value={selectedCurrencyPair}
                         onChange={(e) => setSelectedCurrencyPair(e.target.value)}
                     >
@@ -136,12 +138,12 @@ const Exchange = () => {
                         ))}
                     </select>
                 </div>
-                <h2 className="text-2xl font-bold text-yellow-400 text-center mb-6">
+                <h2 className="text-3xl font-bold text-yellow-400 text-center mb-6">
                     {selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast
                 </h2>
-                <div className="bg-gray-700 p-4 rounded-lg shadow-md">
+                <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                     {loading ? (
-                        <div className="text-yellow-400 text-center">Loading data...</div>
+                        <div className="text-yellow-400 text-center text-lg">Loading data...</div>
                     ) : (
                         <Line data={data} options={options} />
                     )}
@@ -149,13 +151,13 @@ const Exchange = () => {
             </div>
             <div className="flex space-x-4 my-8">
                 <button
-                    className="min-w-48 rounded-2xl bg-sky-500 hover:bg-sky-700 text-white py-2"
+                    className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
                     onClick={addCurrentPriceToFirebase}
                 >
                     Add Current Price
                 </button>
                 <button
-                    className="min-w-48 rounded-2xl bg-green-500 hover:bg-green-700 text-white py-2"
+                    className="px-6 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg transition-all duration-200"
                     onClick={() => navigate("/payment", { state: { currentPrice, selectedCurrencyPair } })}
                 >
                     Buy Currency
