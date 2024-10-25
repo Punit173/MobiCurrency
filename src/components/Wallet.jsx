@@ -86,7 +86,7 @@ const Wallet = () => {
 
     return (
         <>
-        <Navbar/>
+            <Navbar />
             <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
                 <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">
                     <FaWallet className="inline-block mr-2" />
@@ -149,24 +149,26 @@ const Wallet = () => {
                         </div>
                     </div>
                 )}
-            <div className="flex items-center justify-center h-screen">
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-                    <button
-                        className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
-                        onClick={handleInvestClick}
-                    >
-                        INVEST
-                    </button>
                 <div className="flex items-center justify-center h-screen">
                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-                        <button className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={() => { location.href = '/invest' }}>
+                        <button
+                            className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
+                            onClick={handleInvestClick}
+                        >
                             INVEST
                         </button>
+                        <div className="flex items-center justify-center h-screen">
+                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+                                <button className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={() => { location.href = '/invest' }}>
+                                    INVEST
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </>
-    );
+    )
 };
 
 export default Wallet;

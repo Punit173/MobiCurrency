@@ -5,6 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { FaDollarSign, FaEuroSign, FaPoundSign, FaYenSign, FaRupeeSign } from 'react-icons/fa';
 import InvestmentProfit from './InvestmentProfit';
 import InvestmentProfitGraph from './InvestmentProfitGraph';
+import Navbar from './Navbar';
 
 const Invest = () => {
     const [amount, setAmount] = useState('');
@@ -94,55 +95,58 @@ const Invest = () => {
     };
 
     return (
-        <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
-            <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">Invest Money</h1>
-            
-            {/* Display all currency balances */}
-            <div className="text-center text-yellow-400 mb-4">
-                {Object.entries(currencyBalances).map(([currency, balance]) => (
-                    <p key={currency}>{currency}: {balance.toFixed(2)}</p>
-                ))}
-            </div>
+        <>
+            <Navbar/>
+            <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
+                <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">Invest Money</h1>
 
-            <form onSubmit={handleInvestment} className="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
-                <div className="mb-4">
-                    <label className="block text-yellow-400 mb-2" htmlFor="amount">Amount</label>
-                    <input
-                        type="number"
-                        id="amount"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        className="w-full p-2 bg-gray-600 text-gray-300 rounded"
-                        required
-                    />
+                {/* Display all currency balances */}
+                <div className="text-center text-yellow-400 mb-4">
+                    {Object.entries(currencyBalances).map(([currency, balance]) => (
+                        <p key={currency}>{currency}: {balance.toFixed(2)}</p>
+                    ))}
                 </div>
-                <div className="mb-4">
-                    <label className="block text-yellow-400 mb-2" htmlFor="currency">Currency</label>
-                    <select
-                        id="currency"
-                        value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
-                        className="w-full p-2 bg-gray-600 text-gray-300 rounded"
+
+                <form onSubmit={handleInvestment} className="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div className="mb-4">
+                        <label className="block text-yellow-400 mb-2" htmlFor="amount">Amount</label>
+                        <input
+                            type="number"
+                            id="amount"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            className="w-full p-2 bg-gray-600 text-gray-300 rounded"
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-yellow-400 mb-2" htmlFor="currency">Currency</label>
+                        <select
+                            id="currency"
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                            className="w-full p-2 bg-gray-600 text-gray-300 rounded"
+                        >
+                            <option value="USD"><FaDollarSign /> USD</option>
+                            <option value="EUR"><FaEuroSign /> EUR</option>
+                            <option value="GBP"><FaPoundSign /> GBP</option>
+                            <option value="JPY"><FaYenSign /> JPY</option>
+                            <option value="INR"><FaRupeeSign /> INR</option>
+                        </select>
+                    </div>
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
                     >
-                        <option value="USD"><FaDollarSign /> USD</option>
-                        <option value="EUR"><FaEuroSign /> EUR</option>
-                        <option value="GBP"><FaPoundSign /> GBP</option>
-                        <option value="JPY"><FaYenSign /> JPY</option>
-                        <option value="INR"><FaRupeeSign /> INR</option>
-                    </select>
-                </div>
-                <button
-                    type="submit"
-                    className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
-                >
-                    Invest
-                </button>
-            </form>
-            {message && <p className="mt-4 text-yellow-400 text-center">{message}</p>}
+                        Invest
+                    </button>
+                </form>
+                {message && <p className="mt-4 text-yellow-400 text-center">{message}</p>}
 
-            <InvestmentProfit user="akshat" />
-            <InvestmentProfitGraph />
-        </div>
+                <InvestmentProfit user="akshat" />
+                <InvestmentProfitGraph />
+            </div>
+        </>
     );
 };
 
