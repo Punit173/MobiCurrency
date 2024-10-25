@@ -12,11 +12,11 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex space-x-6">
-          <a href="#home" className="flex items-center space-x-1 hover:text-yellow-300">
+          <a href="/" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaHome />
             <span>Home</span>
           </a>
-          <a href="#exchange" className="flex items-center space-x-1 hover:text-yellow-300">
+          <a href="/exchange" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaExchangeAlt />
             <span>Exchange</span>
           </a>
