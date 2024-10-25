@@ -14,6 +14,7 @@ import Rates from './components/Rates';
 import Contact from './components/Contact';
 import  About from './components/About';
 import Login from './components/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -22,16 +23,16 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/exchange" element={<Exchange />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/near" element={<Near />} />
-        <Route path="/invest" element={<Invest />} />
-        <Route path="/rates" element={<Rates />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/exchange" element={<ProtectedRoute><Exchange /></ProtectedRoute>} />
+        <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+        <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+        <Route path="/near" element={<ProtectedRoute><Near /></ProtectedRoute>} />
+        <Route path="/invest" element={<ProtectedRoute><Invest /></ProtectedRoute>} />
+        <Route path="/rates" element={<ProtectedRoute><Rates /></ProtectedRoute>} />
+        <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+        <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
       </Routes>
     </>
   )

@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt, FaWallet } from 'react-icons/fa';
+import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt, FaWallet, FaSignOutAlt } from 'react-icons/fa';
+import { auth } from '../firebase/firebase'; // Import your Firebase auth
+import { signOut } from 'firebase/auth'; // Import signOut method
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // State to manage mobile menu visibility
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); // Toggle the menu open/close state
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out from Firebase
+      navigate('/login'); // Redirect to the login page (or home page)
+    } catch (error) {
+      console.error("Error during logout:", error); // Log any errors during logout
+    }
   };
 
   return (
@@ -42,6 +55,10 @@ const Navbar = () => {
             <FaPhoneAlt />
             <span>Contact</span>
           </a>
+          <button onClick={handleLogout} className="flex items-center space-x-1 hover:text-yellow-300">
+            <FaSignOutAlt />
+            <span>Logout</span>
+          </button>
         </div>
 
         <div className="md:hidden flex items-center">
@@ -79,9 +96,13 @@ const Navbar = () => {
             <FaPhoneAlt className="inline mr-2" />
             Contact
           </a>
+          <button onClick={handleLogout} className="block py-2 hover:text-yellow-300">
+            <FaSignOutAlt className="inline mr-2" />
+            Logout
+          </button>
         </div>
       )}
-            <div className='flex bg-yellow-500 h-1'></div>
+      <div className='flex bg-yellow-500 h-1'></div>
     </nav>
   );
 };
