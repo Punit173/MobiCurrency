@@ -8,7 +8,6 @@ const Home = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen text-gray-100 font-sans">
-            <div className='hidden md:flex md:bg-yellow-500 md:h-1'></div>
             <section className="flex flex-col items-center justify-center h-screen bg-cover bg-center relative text-center overflow-hidden" >
                 <video
                     className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0

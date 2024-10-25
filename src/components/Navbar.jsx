@@ -81,6 +81,7 @@ const Navbar = () => {
           </a>
         </div>
       )}
+            <div className='flex bg-yellow-500 h-1'></div>
     </nav>
   );
 };
