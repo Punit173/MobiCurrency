@@ -10,6 +10,7 @@ const Wallet = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [code, setCode] = useState('');
+    const [modalPurpose, setModalPurpose] = useState(''); // New state to distinguish modal purpose
     const correctCode = '1234';
 
     const db = getDatabase(firebaseApp);
@@ -57,12 +58,23 @@ const Wallet = () => {
 
     const openModal = (currencyId) => {
         setSelectedCurrency(currencyId);
+        setModalPurpose('viewAmount'); // Set modal purpose for viewing amount
+        setIsModalOpen(true);
+    };
+
+    const handleInvestClick = () => {
+        setModalPurpose('invest'); // Set modal purpose for investing
         setIsModalOpen(true);
     };
 
     const handleCheckBalance = () => {
         if (code === correctCode) {
-            setShowAmount((prev) => ({ ...prev, [selectedCurrency]: true })); // Show amount for the selected currency
+            if (modalPurpose === 'viewAmount') {
+                setShowAmount((prev) => ({ ...prev, [selectedCurrency]: true })); // Show amount for the selected currency
+            } else if (modalPurpose === 'invest') {
+                // Redirect to invest page
+                location.href = '/invest';
+            }
             setIsModalOpen(false); // Close the modal
             setCode(''); // Clear the input code
         } else {
@@ -137,7 +149,10 @@ const Wallet = () => {
 
             <div className="flex items-center justify-center h-screen">
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-                    <button className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={() => { location.href = '/invest' }}>
+                    <button
+                        className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition"
+                        onClick={handleInvestClick}
+                    >
                         INVEST
                     </button>
                 </div>
