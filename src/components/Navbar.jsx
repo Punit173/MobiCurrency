@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt } from 'react-icons/fa';
+import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt, FaWallet } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
@@ -23,6 +23,10 @@ const Navbar = () => {
           <a href="#rates" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaDollarSign />
             <span>Rates</span>
+          </a>
+          <a href="/wallet" className="flex items-center space-x-1 hover:text-yellow-300">
+            <FaWallet />
+            <span>Wallet</span>
           </a>
           <a href="#about" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaInfoCircle />
