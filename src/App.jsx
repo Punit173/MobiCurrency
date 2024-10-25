@@ -13,6 +13,7 @@ import Invest from './components/Invest';
 import Rates from './components/Rates';
 import Contact from './components/Contact';
 import  About from './components/About';
+import Login from './components/Login';
 
 
 function App() {
@@ -20,9 +21,9 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/exchange" element={<Exchange />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/wallet" element={<Wallet />} />
