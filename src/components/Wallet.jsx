@@ -17,23 +17,28 @@ const Wallet = () => {
 
     useEffect(() => {
         const fetchWalletData = async () => {
-            const user = "akshat" /* auth.currentUser */;
+            const user = "akshat"; // Replace with auth.currentUser
             if (!user) return;
-
-            const purchasesRef = ref(db, `purchases/${user /* .uid */}`);
+        
+            const purchasesRef = ref(db, `purchases/${user}`); // Ensure you're using the correct user reference
             try {
                 const snapshot = await get(purchasesRef);
                 if (snapshot.exists()) {
                     const purchases = snapshot.val();
                     const currencyBalances = {};
-
-                    // Aggregate balances per currency
+        
+                    // Aggregate totalCost per currency
                     Object.values(purchases).forEach(purchase => {
-                        const { currencyPair, amount } = purchase;
+                        const { currencyPair, totalCost } = purchase; // Change 'amount' to 'totalCost'
                         const currency = currencyPair.split('-')[0]; // e.g., "INR" from "INR-USD"
-                        currencyBalances[currency] = (currencyBalances[currency] || 0) + parseFloat(amount);
+        
+                        // Ensure totalCost is valid
+                        const parsedCost = parseFloat(totalCost);
+                        if (!isNaN(parsedCost)) {
+                            currencyBalances[currency] = (currencyBalances[currency] || 0) + parsedCost;
+                        }
                     });
-
+        
                     // Format data for display
                     const formattedData = Object.keys(currencyBalances).map((currency, index) => ({
                         id: index + 1,
@@ -48,7 +53,7 @@ const Wallet = () => {
         };
 
         fetchWalletData();
-    }, [auth.currentUser]);
+    }, ["akshat"/* auth.currentUser */]);
 
     const openModal = (currencyId) => {
         setSelectedCurrency(currencyId);
@@ -130,15 +135,13 @@ const Wallet = () => {
                 </div>
             )}
 
-
-            <div class="flex items-center justify-center h-screen">
-                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-                    <button class="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={()=>{location.href = '/invest'}}>
+            <div className="flex items-center justify-center h-screen">
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+                    <button className="px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-md hover:bg-yellow-600 transition" onClick={() => { location.href = '/invest' }}>
                         INVEST
                     </button>
                 </div>
             </div>
-
         </div>
     );
 };

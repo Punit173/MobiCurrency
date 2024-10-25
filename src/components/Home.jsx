@@ -8,8 +8,21 @@ const Home = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen text-gray-100 font-sans">
+
+{/* Background video */}
+<video
+    className="absolute top-0 left-0 w-full h-full object-cover z-0" // Set z-index to 0
+    autoPlay
+    muted
+    loop
+>
+    <source src="/homevideo.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
+
+
             {/* Hero Section */}
-            <section className="flex flex-col items-center justify-center h-screen bg-cover bg-center relative text-center overflow-hidden" style={{ backgroundImage: "url('https://plus.unsplash.com/premium_photo-1681469490209-c2f9f8f5c0a2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW9uZXklMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww')" }}>
+            <section className="flex flex-col items-center justify-center h-screen bg-cover bg-center relative text-center overflow-hidden" >
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="relative z-10">
                     <h1 className="text-4xl sm:text-5xl font-bold text-yellow-400 mb-4 animate-fadeInUp">
