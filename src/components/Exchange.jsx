@@ -96,6 +96,9 @@ const Exchange = () => {
         ]
     };
 
+    const currentPrice = historicalData.length ? historicalData[historicalData.length - 1].y : 0;
+
+
     const options = {
         responsive: true,
         maintainAspectRatio: false, // Allow the chart to resize to fill its container
@@ -198,12 +201,12 @@ const Exchange = () => {
                         ))}
                     </select>
                     <div className="flex space-x-4">
-                        <button
+                        {/* <button
                             className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
                             onClick={addCurrentPriceToFirebase}
                         >
                             Add Current Price
-                        </button>
+                        </button> */}
                         <button
                             className="px-6 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg transition-all duration-200"
                             onClick={() => navigate("/payment", { state: { currentPrice, selectedCurrencyPair, bookingDate: selectedBookingDate } })}
