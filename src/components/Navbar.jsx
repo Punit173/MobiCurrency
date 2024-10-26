@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt, FaWallet, FaSignOutAlt } from 'react-icons/fa';
+import { FaDollarSign, FaExchangeAlt, FaHome, FaInfoCircle, FaPhoneAlt, FaWallet, FaSignOutAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { auth } from '../firebase/firebase'; // Import your Firebase auth
 import { signOut } from 'firebase/auth'; // Import signOut method
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
@@ -54,6 +54,10 @@ const Navbar = () => {
           <a href="/contact" className="flex items-center space-x-1 hover:text-yellow-300">
             <FaPhoneAlt />
             <span>Contact</span>
+          </a>
+          <a href="/near" className="flex items-center space-x-1 hover:text-yellow-300">
+            <FaMapMarkerAlt />
+            <span>Nearby</span>
           </a>
           <button onClick={handleLogout} className="flex items-center space-x-1 hover:text-yellow-300">
             <FaSignOutAlt />

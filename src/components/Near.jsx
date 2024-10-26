@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from './Navbar';
 
 // Sample user data with descriptions
 const mockUsers = [
@@ -13,7 +14,7 @@ const getDistance = (lat1, lng1, lat2, lng2) => {
     const R = 6371; // Radius of the Earth in km
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLng = (lng2 - lng1) * (Math.PI / 180);
-    const a = 
+    const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
         Math.sin(dLng / 2) * Math.sin(dLng / 2);
@@ -44,37 +45,40 @@ export const Near = () => {
     }, []);
 
     return (
-        <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
-            <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">Users Near You</h1>
-            {currentUserLocation ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {usersWithin10km.length > 0 ? (
-                        usersWithin10km.map(user => {
-                            const distance = getDistance(
-                                currentUserLocation.lat,
-                                currentUserLocation.lng,
-                                user.location.lat,
-                                user.location.lng
-                            ).toFixed(2); // Format distance to 2 decimal places
+        <>
+            <Navbar/>
+            <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
+                <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">Users Near You</h1>
+                {currentUserLocation ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {usersWithin10km.length > 0 ? (
+                            usersWithin10km.map(user => {
+                                const distance = getDistance(
+                                    currentUserLocation.lat,
+                                    currentUserLocation.lng,
+                                    user.location.lat,
+                                    user.location.lng
+                                ).toFixed(2); // Format distance to 2 decimal places
 
-                            return (
-                                <div key={user.id} className="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
-                                    <h2 className="text-xl font-semibold text-yellow-400">{user.name}</h2>
-                                    <p className="text-gray-300 mb-2">{user.description}</p>
-                                    <p className="text-gray-400">Distance: {distance} km</p>
-                                    <button className="bg-yellow-500 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-600 transition mt-2">
-                                        Chat
-                                    </button>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p className="text-gray-300">No users found within 10 km.</p>
-                    )}
-                </div>
-            ) : (
-                <p className="text-gray-300">Getting your location...</p>
-            )}
-        </div>
+                                return (
+                                    <div key={user.id} className="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
+                                        <h2 className="text-xl font-semibold text-yellow-400">{user.name}</h2>
+                                        <p className="text-gray-300 mb-2">{user.description}</p>
+                                        <p className="text-gray-400">Distance: {distance} km</p>
+                                        <button className="bg-yellow-500 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-600 transition mt-2">
+                                            Chat
+                                        </button>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className="text-gray-300">No users found within 10 km.</p>
+                        )}
+                    </div>
+                ) : (
+                    <p className="text-gray-300">Getting your location...</p>
+                )}
+            </div>
+        </>
     );
 };
