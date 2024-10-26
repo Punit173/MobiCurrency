@@ -6,6 +6,7 @@ import firebaseApp from "../firebase/firebase";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -14,7 +15,7 @@ const Exchange = () => {
     const [historicalData, setHistoricalData] = useState([]);
     const [forecastData, setForecastData] = useState([]);
     const [selectedCurrencyPair, setSelectedCurrencyPair] = useState("INR-USD");
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
 
     // Currency options
     const currencyPairs = ["INR-USD", "EUR-USD", "GBP-USD", "AUD-USD", "JPY-USD"];
@@ -107,7 +108,7 @@ const Exchange = () => {
     const addCurrentPriceToFirebase = async () => {
         const db = getDatabase(firebaseApp);
         const auth = getAuth(firebaseApp);
-        const user = auth.currentUser || { uid: "akshat" }; 
+        const user = auth.currentUser || { uid: "akshat" };
 
         if (user) {
             const currentPrice = historicalData.length ? historicalData[historicalData.length - 1].y : null;
@@ -129,47 +130,50 @@ const Exchange = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
-            <div className="w-full max-w-4xl bg-gray-800 shadow-lg rounded-lg p-6">
-                <div className="flex justify-center mb-6">
-                    <select
-                        className="bg-gray-700 text-yellow-400 p-2 rounded-lg outline-none"
-                        value={selectedCurrencyPair}
-                        onChange={(e) => setSelectedCurrencyPair(e.target.value)}
+        <>
+            <Navbar />
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+                <div className="w-full max-w-4xl bg-gray-800 shadow-lg rounded-lg p-6">
+                    <div className="flex justify-center mb-6">
+                        <select
+                            className="bg-gray-700 text-yellow-400 p-2 rounded-lg outline-none"
+                            value={selectedCurrencyPair}
+                            onChange={(e) => setSelectedCurrencyPair(e.target.value)}
+                        >
+                            {currencyPairs.map((pair) => (
+                                <option key={pair} value={pair}>
+                                    {pair.replace("-", " to ")}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <h2 className="text-2xl font-bold text-yellow-400 text-center mb-6">
+                        {selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast
+                    </h2>
+                    <div className="bg-gray-700 p-4 rounded-lg shadow-md">
+                        {loading ? (
+                            <div className="text-white text-center">Loading...</div>
+                        ) : (
+                            <Line data={data} options={options} />
+                        )}
+                    </div>
+                </div>
+                <div className="flex space-x-4 my-8">
+                    <button
+                        className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
+                        onClick={addCurrentPriceToFirebase}
                     >
-                        {currencyPairs.map((pair) => (
-                            <option key={pair} value={pair}>
-                                {pair.replace("-", " to ")}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <h2 className="text-2xl font-bold text-yellow-400 text-center mb-6">
-                    {selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast
-                </h2>
-                <div className="bg-gray-700 p-4 rounded-lg shadow-md">
-                    {loading ? (
-                        <div className="text-white text-center">Loading...</div>
-                    ) : (
-                        <Line data={data} options={options} />
-                    )}
+                        Add Current Price
+                    </button>
+                    <button
+                        className="px-6 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg transition-all duration-200"
+                        onClick={() => navigate("/payment", { state: { currentPrice, selectedCurrencyPair } })}
+                    >
+                        Buy Currency
+                    </button>
                 </div>
             </div>
-            <div className="flex space-x-4 my-8">
-                <button
-                    className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
-                    onClick={addCurrentPriceToFirebase}
-                >
-                    Add Current Price
-                </button>
-                <button
-                    className="px-6 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg transition-all duration-200"
-                    onClick={() => navigate("/payment", { state: { currentPrice, selectedCurrencyPair } })}
-                >
-                    Buy Currency
-                </button>
-            </div>
-        </div>
+        </>
     );
 };
 

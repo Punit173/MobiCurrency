@@ -12,7 +12,7 @@ import {Near} from './components/Near';
 import Invest from './components/Invest';
 import Rates from './components/Rates';
 import Contact from './components/Contact';
-import  About from './components/About';
+import About from './components/About';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 
