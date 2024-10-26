@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getDatabase, ref, set, push } from 'firebase/database';
 import firebaseApp from '../firebase/firebase';
 import { getAuth } from 'firebase/auth';
@@ -13,6 +13,7 @@ const Payment = () => {
     const [totalCost, setTotalCost] = useState(0);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const db = getDatabase(firebaseApp);
     const auth = getAuth(firebaseApp);
@@ -41,7 +42,7 @@ const Payment = () => {
 
     // Handle purchase logic
     const handlePurchase = async () => {
-        const user = auth.currentUser || { uid: "akshat" }; // Use temporary user if no authenticated user
+        const user = { uid: "akshat" }; // Use temporary user if no authenticated user
         if (user) {
             const purchaseDate = new Date().toLocaleDateString();
             const newPurchaseRef = push(ref(db, `purchases/${user.uid}`));
@@ -57,6 +58,7 @@ const Payment = () => {
 
                 alert('Purchase successfully saved!');
                 setSuccessMessage(true);
+                navigate('/wallet');
 
                 // Hide success message after 5 seconds
                 setTimeout(() => {

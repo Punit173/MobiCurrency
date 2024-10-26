@@ -37,6 +37,7 @@ const Invest = () => {
                 }
             } catch (error) {
                 console.error('Error fetching wallet data:', error);
+                setMessage('Failed to fetch wallet data. Please try again later.');
             }
         };
 
@@ -65,7 +66,7 @@ const Invest = () => {
 
         const investmentData = {
             currencyPair: `${currency}-USD`, // Assuming all investments are converted to USD
-            amount: amount,
+            amount: parseFloat(amount),
             timestamp: Date.now(),
         };
 
@@ -96,7 +97,7 @@ const Invest = () => {
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <div className="bg-gray-900 min-h-screen text-gray-100 p-6">
                 <h1 className="text-4xl font-extrabold text-yellow-400 mb-8 text-center">Invest Money</h1>
 
