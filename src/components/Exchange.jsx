@@ -62,17 +62,19 @@ const Exchange = () => {
     const actualRates = historicalData.map(data => data.y);
     const forecastedRates = forecastData.map(data => data.yhat);
 
-    // Data for the recommended buy point (highlighted on the chart)
     const buyPointIndex = forecastData.findIndex(data => new Date(data.ds).toLocaleDateString() === buyRecommendation?.date);
-    const buyPointData = {
+    let buyPointData = {
         label: 'Recommended Buy Rate',
-        data: Array(historicalData.length + buyPointIndex).fill(null).concat(buyPointIndex !== -1 ? forecastData[buyPointIndex].yhat : null),
-        borderColor: 'transparent',
-        backgroundColor: '#FF6347',
-        pointRadius: 6,
+        data: Array(historicalData.length + forecastData.length).fill(null), // Initialize with correct length
+        borderColor: 'solid',
+        backgroundColor: 'green',
+        pointRadius: 8,
         pointHoverRadius: 8,
     };
 
+    if (buyPointIndex !== -1) {
+        buyPointData.data[historicalData.length + buyPointIndex] = forecastData[buyPointIndex].yhat; // Set the value only if buyPointIndex is valid
+    }
     const data = {
         labels: dates,
         datasets: [
@@ -96,6 +98,7 @@ const Exchange = () => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false, // Allow the chart to resize to fill its container
         plugins: {
             legend: { position: 'top', labels: { color: '#D1D5DB' } },
             title: { display: true, text: `${selectedCurrencyPair} Exchange Rate Forecast`, color: '#F3F4F6', font: { size: 18 } }
@@ -123,7 +126,6 @@ const Exchange = () => {
             }
         }
     };
-
     const addCurrentPriceToFirebase = async () => {
         const db = getDatabase(firebaseApp);
         const auth = getAuth(firebaseApp);
@@ -169,7 +171,7 @@ const Exchange = () => {
                     <h2 className="text-2xl font-bold text-yellow-400 text-center mb-6">
                         {selectedCurrencyPair.replace("-", " to ")} Exchange Rate Forecast
                     </h2>
-                    <div className="bg-gray-700 p-4 rounded-lg shadow-md">
+                    <div className="bg-gray-700 p-4 rounded-lg shadow-md" style={{ width: '100%', height: '400px' }}>
                         {loading ? (
                             <div className="text-white text-center">Loading...</div>
                         ) : (
@@ -210,7 +212,7 @@ const Exchange = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
