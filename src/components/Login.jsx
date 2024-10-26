@@ -291,17 +291,12 @@ const Login = () => {
         <>
             <div
                 className="min-h-screen flex bg-black text-yellow-500 p-4"
+                style={{
+                    backgroundImage: 'url("https://plus.unsplash.com/premium_photo-1681469490209-c2f9f8f5c0a2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW9uZXklMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
             >
-                <video
-                    className="absolute top-0 left-0 w-full h-full object-cover -z-10"
-                    autoPlay
-                    muted
-                    loop
-                >
-                    <source src="public/2759477-uhd_3840_2160_30fps.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-
                 {/* <div className="flex-1 flex items-center justify-center p-8">
                     <div className="lg:flex flex-col justify-center max-w-lg bg-gray-800 p-6 rounded-md shadow-lg">
                         <h1 className="text-4xl font-bold text-white mb-4">
@@ -323,7 +318,7 @@ const Login = () => {
                     </div>
                 </div> */}
 
-                <div className="flex items-center justify-center flex-1">
+                <div className="flex items-center justify-center flex-1 rounded-3xl">
                     <form
                         className="bg-gray-800 rounded-lg p-6 shadow-lg w-full max-w-md"
                         onSubmit={isLogin ? handleLogin : handleSignup}
