@@ -15,6 +15,7 @@ import Contact from './components/Contact';
 import About from './components/About';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import Chat from './components/Chat';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/rates" element={<ProtectedRoute><Rates /></ProtectedRoute>} />
         <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
         <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       </Routes>
     </>
   )
