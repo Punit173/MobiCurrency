@@ -15,6 +15,7 @@ import Contact from './components/Contact';
 import About from './components/About';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import Chat from './components/Chat';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/exchange" element={<ProtectedRoute><Exchange /></ProtectedRoute>} />
+        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
         <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
         <Route path="/near" element={<ProtectedRoute><Near /></ProtectedRoute>} />

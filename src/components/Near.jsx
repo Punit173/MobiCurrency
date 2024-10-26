@@ -65,9 +65,9 @@ export const Near = () => {
                                         <h2 className="text-xl font-semibold text-yellow-400">{user.name}</h2>
                                         <p className="text-gray-300 mb-2">{user.description}</p>
                                         <p className="text-gray-400">Distance: {distance} km</p>
-                                        <button className="bg-yellow-500 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-600 transition mt-2">
+                                        <a href="/chat"><button className="bg-yellow-500 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-600 transition mt-2">
                                             Chat
-                                        </button>
+                                        </button></a>
                                     </div>
                                 );
                             })
